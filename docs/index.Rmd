@@ -1,0 +1,371 @@
+---
+title: "Analysis"
+author: "Arjit Bhardwaj"
+date: "2023-06-10"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(dplyr)
+library(readr)
+library(lubridate)
+library(geosphere)
+library(ggplot2)
+library(ggmap)
+```
+
+```{r}
+df1 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202205-divvy-tripdata.csv')
+df2 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202206-divvy-tripdata.csv')
+df3 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202207-divvy-tripdata.csv')
+df4 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202208-divvy-tripdata.csv')
+df5 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202209-divvy-tripdata.csv')
+df6 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202210-divvy-tripdata.csv')
+df7 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202211-divvy-tripdata.csv')
+df8 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202212-divvy-tripdata.csv')
+df9 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202301-divvy-tripdata.csv')
+df10 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202302-divvy-tripdata.csv')
+df11 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202303-divvy-tripdata.csv')
+df12 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202304-divvy-tripdata.csv')
+```
+
+```{r}
+colnames(df1)
+```
+
+```{r}
+all_rides <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12)
+
+colnames(all_rides)
+```
+
+```{r}
+write_csv(all_rides, '/home/arjit/Projects/Case Study Cyclistic/Data/all_rides.csv')
+```
+
+```{r}
+sapply(all_rides, class)
+```
+
+```{r}
+ncol(all_rides)
+nrow(all_rides)
+
+sum(is.na(all_rides))
+```
+
+```{r}
+all_rides <- janitor::remove_empty(all_rides, which=c("cols"))
+all_rides <- janitor::remove_empty(all_rides, which=c("rows"))
+```
+
+```{r}
+all_rides <- na.omit(all_rides)
+sum(is.na(all_rides))
+```
+
+```{r}
+nrow(all_rides)
+```
+
+```{r}
+dim(all_rides)
+```
+
+```{r}
+all_rides$minutes <- difftime(all_rides$ended_at, all_rides$started_at, units = c("min"))
+all_rides$minutes <- as.numeric(as.character(all_rides$minutes))
+all_rides$minutes <- round(all_rides$minutes, 1)
+```
+
+```{r}
+is.numeric(all_rides$minutes)
+```
+
+```{r}
+all_rides$date <- as.Date(all_rides$started_at)
+all_rides$month <- format(as.Date(all_rides$date), "%m")
+all_rides$day <- format(as.Date(all_rides$date), "%d")
+all_rides$year <- format(as.Date(all_rides$date), "%Y")
+all_rides$day_of_week <- format(as.Date(all_rides$date), "%A")
+all_rides$hour <- hour(all_rides$started_at)
+```
+
+```{r}
+head(all_rides)
+```
+
+```{r}
+all_rides <- all_rides %>% mutate(season = case_when(month == "01" ~ "Winter",
+                                                     month == "02" ~ "Winter", 
+                                                     month == "03" ~ "Spring", 
+                                                     month == "04" ~ "Spring", 
+                                                     month == "05" ~ "Summer", 
+                                                     month == "06" ~ "Summer", 
+                                                     month == "07" ~ "Summer", 
+                                                     month == "08" ~ "Summer", 
+                                                     month == "09" ~ "Fall", 
+                                                     month == "10" ~ "Fall", 
+                                                     month == "11" ~ "Winter", 
+                                                     month == "12" ~ "Winter"))
+```
+
+```{r}
+all_rides <- all_rides %>% mutate(time_of_day = case_when(hour == "0" ~ "Night",
+                                                          hour == "1" ~ "Night",
+                                                          hour == "2" ~ "Night", 
+                                                          hour == "3" ~ "Night", 
+                                                          hour == "4" ~ "Night", 
+                                                          hour == "5" ~ "Morning", 
+                                                          hour == "6" ~ "Morning", 
+                                                          hour == "7" ~ "Morning", 
+                                                          hour == "8" ~ "Morning", 
+                                                          hour == "9" ~ "Morning", 
+                                                          hour == "10" ~ "Morning", 
+                                                          hour == "11" ~ "Morning", 
+                                                          hour == "12" ~ "Afternoon", 
+                                                          hour == "13" ~ "Afternoon", 
+                                                          hour == "14" ~ "Afternoon", 
+                                                          hour == "15" ~ "Afternoon", 
+                                                          hour == "16" ~ "Afternoon", 
+                                                          hour == "17" ~ "Afternoon", 
+                                                          hour == "18" ~ "Evening", 
+                                                          hour == "19" ~ "Evening", 
+                                                          hour == "20" ~ "Evening", 
+                                                          hour == "21" ~ "Evening", 
+                                                          hour == "22" ~ "Evening", 
+                                                          hour == "23" ~ "Evening"))
+```
+
+```{r}
+all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January", 
+                                                    month == "02" ~ "February", 
+                                                    month == "03" ~ "March", 
+                                                    month == "04" ~ "April", 
+                                                    month == "05" ~ "May", 
+                                                    month == "06" ~ "June", 
+                                                    month == "07" ~ "July", 
+                                                    month == "08" ~ "August", 
+                                                    month == "09" ~ "September", 
+                                                    month == "10" ~ "October", 
+                                                    month == "11" ~ "November", 
+                                                    month == "12" ~ "December"))
+```
+
+```{r}
+tail(all_rides)
+```
+
+```{r}
+unique(all_rides$rideable_type)
+```
+
+```{r}
+unique(all_rides$member_casual)
+```
+
+```{r}
+sum(is.na(all_rides))
+```
+
+```{r}
+distinct(all_rides)
+```
+
+```{r}
+dim(all_rides)
+```
+
+```{r}
+write_csv(all_rides, '/home/arjit/Projects/Case Study Cyclistic/Data/all_rides_modified.csv')
+```
+
+```{r}
+df <- read_csv('/home/arjit/Projects/Case Study Cyclistic/Data/all_rides_modified.csv')
+```
+
+```{r}
+head(df)
+```
+
+```{r}
+dim(df)
+```
+
+```{r}
+str(df)
+```
+
+```{r}
+summary(df)
+```
+
+```{r}
+df$ride_length <- distGeo(matrix(c(df$start_lng, df$start_lat), ncol = 2), matrix(c(df$end_lng, df$end_lat), ncol = 2))
+
+df$ride_length <- df$ride_length/1000
+```
+
+```{r}
+df <- df[!(df$ride_length <= 0),]
+```
+
+```{r}
+sum(is.na(df))
+
+df <- na.omit(df)
+```
+
+```{r}
+str(df)
+```
+
+```{r}
+df %>% summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
+                 max_ride_length = max(ride_length), min_ride_length = min(ride_length))
+```
+
+```{r}
+df %>% 
+    group_by(member_casual) %>% 
+    summarise(ride_count = length(ride_id), ride_percentage = (length(ride_id) / nrow(df)) * 100)
+
+ggplot(df, aes(x = member_casual, fill=member_casual)) +
+    geom_bar() +
+    labs(x="Casuals vs Members", y="Number Of Rides", title= "Casuals vs Members distribution")
+```
+
+```{r}
+df %>%
+  group_by(member_casual) %>% 
+  summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
+            max_ride_length = max(ride_length), min_ride_length = min(ride_length))
+```
+
+```{r}
+df %>% 
+  group_by(member_casual, day_of_week) %>%  
+  summarise(number_of_rides = n()
+  ,avg_ride_length = mean(ride_length),.groups="drop") %>% 
+  arrange(member_casual, day_of_week)
+```
+
+```{r}
+df %>%  
+  group_by(member_casual, day_of_week) %>% 
+  summarise(number_of_rides = n(), .groups="drop") %>% 
+  arrange(member_casual, day_of_week)  %>% 
+  ggplot(aes(x = day_of_week, y = number_of_rides, fill = member_casual)) +
+  labs(title ="Total rides by Members and Casual riders Vs. Day of the week") +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+
+
+```
+
+```{r}
+df %>%  
+  group_by(member_casual, day_of_week) %>% 
+  summarise(average_ride_length = mean(ride_length), .groups="drop") %>%
+  ggplot(aes(x = day_of_week, y = average_ride_length, fill = member_casual)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) + 
+  labs(title ="Average ride time by Members and Casual riders Vs. Day of the week")
+```
+
+```{r}
+df %>% 
+  group_by(member_casual, month) %>%  
+  summarise(number_of_rides = n(), average_ride_length = mean(ride_length), .groups="drop") %>% 
+  arrange(member_casual, month)
+```
+
+```{r}
+df %>%  
+  group_by(member_casual, month) %>% 
+  summarise(number_of_rides = n(),.groups="drop") %>% 
+  arrange(member_casual, month)  %>% 
+  ggplot(aes(x = month, y = number_of_rides, fill = member_casual)) +
+  labs(title ="Total rides by Members and Casual riders Vs. Month", x = "Month", y= "Number Of Rides") +
+  theme(axis.text.x = element_text(angle = 45)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) +
+  scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
+```
+
+```{r}
+df %>%  
+  group_by(member_casual, month) %>% 
+  summarise(average_ride_length = mean(ride_length),.groups="drop") %>%
+  ggplot(aes(x = month, y = average_ride_length, fill = member_casual)) +
+  geom_col(width=0.5, position = position_dodge(width=0.5)) + 
+  labs(title ="Average ride length by Members and Casual riders Vs. Month") +
+  theme(axis.text.x = element_text(angle = 30))
+```
+
+```{r}
+df %>% 
+  group_by(member_casual) %>%
+  summarise(avg_ride_length = mean(ride_length)) %>%
+  ggplot() + 
+  geom_col(mapping= aes(x= member_casual,y= avg_ride_length,fill=member_casual), show.legend = FALSE)+
+  labs(title = "Mean travel distance by Members and Casual riders", x="Member and Casual riders", y="Average distance In Km")
+```
+
+```{r}
+df %>%
+    ggplot(aes(hour, fill= member_casual)) +
+    labs(x="Hour of the day", title="Cyclistic's Bike demand by hour in a day") +
+    geom_bar()
+```
+
+```{r}
+df %>%
+    ggplot(aes(hour, fill=member_casual)) +
+    geom_bar() +
+    labs(x="Hour of the day", title="Cyclistic's bike demand per hour by day of the week") +
+    facet_wrap(~ day_of_week)
+```
+
+```{r}
+df %>%
+    group_by(rideable_type) %>% 
+    summarise(count = length(ride_id))
+
+ggplot(df, aes(x=rideable_type, fill=member_casual)) +
+    labs(x="Rideable type", title="Rideable type Vs. total rides by Members and casual riders") +
+    geom_bar()
+```
+
+```{r}
+coordinates_df <- df %>% 
+filter(start_lng != end_lng & start_lat != end_lat) %>%
+group_by(start_lng, start_lat, end_lng, end_lat, member_casual, rideable_type) %>%
+summarise(total_rides = n(),.groups="drop") %>%
+filter(total_rides > 200)
+```
+
+```{r}
+casual_riders <- coordinates_df %>% filter(member_casual == "casual")
+member_riders <- coordinates_df %>% filter(member_casual == "member")
+```
+
+```{r}
+chicago <- c(left = -87.700424, bottom = 41.790769, right = -87.554855, top = 41.990119)
+
+chicago_map <- get_stamenmap(bbox = chicago, zoom = 12, maptype = "terrain")
+```
+
+```{r}
+ggmap(chicago_map,darken = c(0.1, "white")) +
+   geom_point(casual_riders, mapping = aes(x = start_lng, y = start_lat, color=rideable_type), size = 2) +
+   coord_fixed(0.8) +
+   labs(title = "Most used routes by Casual riders",x=NULL,y=NULL) +
+   theme(legend.position="none")
+
+
+ggmap(chicago_map,darken = c(0.1, "white")) +
+    geom_point(member_riders, mapping = aes(x = start_lng, y = start_lat, color=rideable_type), size = 2) +  
+    coord_fixed(0.8) +
+    labs(title = "Most used routes by Member riders",x=NULL,y=NULL) +
+    theme(legend.position="none")
+```
