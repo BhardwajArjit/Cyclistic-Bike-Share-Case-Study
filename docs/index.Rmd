@@ -1,5 +1,5 @@
 ---
-title: "Analysis"
+title: "Cyclistic Bike Share Case Study Analysis"
 author: "Arjit Bhardwaj"
 date: "2023-06-10"
 output: html_document
@@ -14,6 +14,51 @@ library(geosphere)
 library(ggplot2)
 library(ggmap)
 ```
+
+### **Introduction**
+
+This is the capstone project as part of my Google Data Analytics Professional Certificate course. For the analysis, I will be using R programming language and RStudio IDE.
+
+#### **Modus Operandi**
+
+-   Ask
+-   Prepare
+-   Process
+-   Analyse
+-   Share
+-   Act
+
+### **Scenario**
+
+You are a junior data analyst working in the marketing analyst team at Cyclistic, a bike-share company in Chicago. The director of marketing believes the company's future success depends on maximizing the number of annual memberships. Therefore, your team wants to understand how casual riders and annual members use Cyclistic bikes differently. From these insights, your team will design a new marketing strategy to convert casual riders into annual members. But first, Cyclistic executives must approve your recommendations, so they must be backed up with compelling data insights and professional data visualizations.
+
+### **Problem Statement**
+
+-   How do annual members and casual riders use Cyclistic bikes differently?
+-   Why would casual riders buy Cyclistic annual memberships?
+-   How can Cyclistic use digital media to influence casual riders to become members?
+
+The director of marketing and your manager Lily Moreno has assigned you the first question to answer: How do annual members and casual riders use Cyclistic bikes differently?
+
+### **Ask**
+
+#### **Key tasks**
+
+-   Identify the business task
+    -   The main objective is to build the best marketing strategies to turn casual bike riders into annual members by analyzing how the 'Casual' and 'Annual' customers use Cyclistic bike share differently.
+-   Consider key stakeholders
+    -   Cyclistic executive team
+    -   Director of Marketing
+    -   Marketing Analytics team
+
+#### **Deliverable**
+
+-   A clear statement of the business task
+    -   Find the difference between casual and member riders.
+
+### **Prepare**
+
+I will be using Cyclistic's historical trip data to analyse and identify trends. The data has been made available by **Motivate International Inc.**
 
 ```{r}
 df1 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202205-divvy-tripdata.csv')
