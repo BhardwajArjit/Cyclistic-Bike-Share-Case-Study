@@ -60,6 +60,35 @@ The director of marketing and your manager Lily Moreno has assigned you the firs
 
 I will be using Cyclistic's historical trip data to analyse and identify trends. The data has been made available by **Motivate International Inc.**
 
+#### **Key Tasks**
+
+-   Download data and store it appropriately.
+    -   Data has been downloaded and copies have been stored securely on my computer.
+-   Identify how it's organised.
+    -   All trip data is in comma-delimited (.CSV) format. Column names - "ride_id", "rideable_type", "started_at", "ended_at", "start_station_name", "start_station_id", "end_station_name","end_station_id", "start_lat", "start_lng", "end_lat", "end_lng", "member_casual" (Total 13 columns).
+-   Sort and filter the data.
+    -   For this analysis I'm going to use past 12 months data starting form May 2022 to April 2023.
+-   Determine the credibility of the data.
+    -   For the purpose of this case study, the datasets are appropriate and it will enable me to answer the business questions. But due to privacy policy, I cannot use rider's personally identification information, and this will prevent me from determining if a single rider taken several rides. All ride_id are unique in this datasets.
+
+#### **Deliverable**
+
+-   A description of all data sources used.
+    -   Main source data provided by Cyclistic Company.
+
+##### importing the packages to be used
+
+```{r}
+library(readr)
+library(dplyr)
+library(lubridate)
+library(geosphere)
+library(ggplot2)
+library(ggmap)
+```
+
+##### import data in R Studio
+
 ```{r}
 df1 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202205-divvy-tripdata.csv')
 df2 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202206-divvy-tripdata.csv')
@@ -75,15 +104,47 @@ df11 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202303-divvy-tr
 df12 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202304-divvy-tripdata.csv')
 ```
 
+##### checking the consistency of data
+
 ```{r}
 colnames(df1)
+colnames(df2)
+colnames(df3)
+colnames(df4)
+colnames(df5)
+colnames(df6)
+colnames(df7)
+colnames(df8)
+colnames(df9)
+colnames(df10)
+colnames(df11)
+colnames(df12)
 ```
+
+##### checking the structure of data
+
+```{r}
+str(df1)
+str(df2)
+str(df3)
+str(df4)
+str(df5)
+str(df6)
+str(df7)
+str(df8)
+str(df9)
+str(df10)
+str(df11)
+str(df12)
+```
+
+##### merging 12 datasets into 1 dataset
 
 ```{r}
 all_rides <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12)
-
-colnames(all_rides)
 ```
+
+##### creating a file of the merged dataset
 
 ```{r}
 write_csv(all_rides, '/home/arjit/Projects/Case Study Cyclistic/Data/all_rides.csv')
