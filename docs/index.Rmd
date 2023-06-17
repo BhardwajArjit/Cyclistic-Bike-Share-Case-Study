@@ -150,9 +150,28 @@ all_rides <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12
 write_csv(all_rides, '/home/arjit/Projects/Case Study Cyclistic/Data/all_rides.csv')
 ```
 
+### **Process**
+
+Cleaning and processing data for analysis
+
+#### **Key tasks**
+
+-   Check the data for errors
+-   Choose your tools
+-   Transform the data so you can work with it effectively
+-   Document the cleaning process
+
+#### **Deliverable**
+
+-   Documentation of any cleaning or manipulating the data
+
+##### Analyzing the the structure of attributes
+
 ```{r}
 sapply(all_rides, class)
 ```
+
+##### Number of columns, rows and total NA values
 
 ```{r}
 ncol(all_rides)
@@ -161,23 +180,33 @@ nrow(all_rides)
 sum(is.na(all_rides))
 ```
 
+##### Removing all the empty cells
+
 ```{r}
 all_rides <- janitor::remove_empty(all_rides, which=c("cols"))
 all_rides <- janitor::remove_empty(all_rides, which=c("rows"))
 ```
+
+##### Removing all the NA values
 
 ```{r}
 all_rides <- na.omit(all_rides)
 sum(is.na(all_rides))
 ```
 
+##### Checking the number of rows left after removing NA
+
 ```{r}
 nrow(all_rides)
 ```
 
+##### Checking the dimension of the dataset
+
 ```{r}
 dim(all_rides)
 ```
+
+##### Calculating the ride time
 
 ```{r}
 all_rides$minutes <- difftime(all_rides$ended_at, all_rides$started_at, units = c("min"))
@@ -185,9 +214,13 @@ all_rides$minutes <- as.numeric(as.character(all_rides$minutes))
 all_rides$minutes <- round(all_rides$minutes, 1)
 ```
 
+##### Checking the datatype of "minutes" column
+
 ```{r}
 is.numeric(all_rides$minutes)
 ```
+
+##### Adding date, month, day, year, day of week, hour columns
 
 ```{r}
 all_rides$date <- as.Date(all_rides$started_at)
@@ -198,9 +231,13 @@ all_rides$day_of_week <- format(as.Date(all_rides$date), "%A")
 all_rides$hour <- hour(all_rides$started_at)
 ```
 
+##### Checking the modified dataset
+
 ```{r}
 head(all_rides)
 ```
+
+##### Adding the season column
 
 ```{r}
 all_rides <- all_rides %>% mutate(season = case_when(month == "01" ~ "Winter",
@@ -216,6 +253,8 @@ all_rides <- all_rides %>% mutate(season = case_when(month == "01" ~ "Winter",
                                                      month == "11" ~ "Winter", 
                                                      month == "12" ~ "Winter"))
 ```
+
+##### Mapping the time column to phases of a day
 
 ```{r}
 all_rides <- all_rides %>% mutate(time_of_day = case_when(hour == "0" ~ "Night",
@@ -244,6 +283,8 @@ all_rides <- all_rides %>% mutate(time_of_day = case_when(hour == "0" ~ "Night",
                                                           hour == "23" ~ "Evening"))
 ```
 
+##### Mapping the months to their names
+
 ```{r}
 all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January", 
                                                     month == "02" ~ "February", 
@@ -258,6 +299,8 @@ all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January",
                                                     month == "11" ~ "November", 
                                                     month == "12" ~ "December"))
 ```
+
+##### Verifying the results
 
 ```{r}
 tail(all_rides)
