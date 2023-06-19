@@ -306,20 +306,43 @@ all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January",
 tail(all_rides)
 ```
 
+### **Analyze**
+
+Now all the required information are in one place and ready for exploration.
+
+#### **Key tasks**
+
+-   Aggregate your data so it's useful and accessible.
+-   Organise and format your data.
+-   Perform calculations.
+-   Identify trends and relationships.
+
+#### **Deliverable**
+
+-   A summary of analysis.
+
+##### Checking the unique types of ride avaiable
+
 ```{r}
 unique(all_rides$rideable_type)
 ```
+
+##### Checking the unique values in member_casual
 
 ```{r}
 unique(all_rides$member_casual)
 ```
 
+##### Verifying if there are any NA in dataset
+
 ```{r}
 sum(is.na(all_rides))
 ```
 
+##### Checking if there are any duplicates
+
 ```{r}
-distinct(all_rides)
+#distinct(all_rides)
 ```
 
 ```{r}
@@ -342,13 +365,19 @@ head(df)
 dim(df)
 ```
 
+##### Checking the structure of dataset
+
 ```{r}
 str(df)
 ```
 
+##### Analzying the summary of the dataset
+
 ```{r}
 summary(df)
 ```
+
+##### Calculating the ride length in kilometers
 
 ```{r}
 df$ride_length <- distGeo(matrix(c(df$start_lng, df$start_lat), ncol = 2), matrix(c(df$end_lng, df$end_lat), ncol = 2))
@@ -356,9 +385,13 @@ df$ride_length <- distGeo(matrix(c(df$start_lng, df$start_lat), ncol = 2), matri
 df$ride_length <- df$ride_length/1000
 ```
 
+##### Removing the rows with ride length as negative or zero
+
 ```{r}
 df <- df[!(df$ride_length <= 0),]
 ```
+
+##### Removing the NA in the dataset
 
 ```{r}
 sum(is.na(df))
@@ -366,14 +399,24 @@ sum(is.na(df))
 df <- na.omit(df)
 ```
 
-```{r}
-str(df)
-```
+#### Doing descriptive analysis, studying
+
+##### avg_ride_length -\> straigth average(total ride length / total rides)
+
+##### median_length -\> midpoint number of ride length
+
+##### max_ride_length -\> longest ride
+
+##### min_ride_length -\> shortest ride
 
 ```{r}
 df %>% summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
                  max_ride_length = max(ride_length), min_ride_length = min(ride_length))
 ```
+
+#### **Compare members and casual riders**
+
+-   Member vs casual riders difference depending on the total rides taken
 
 ```{r}
 df %>% 
@@ -385,12 +428,16 @@ ggplot(df, aes(x = member_casual, fill=member_casual)) +
     labs(x="Casuals vs Members", y="Number Of Rides", title= "Casuals vs Members distribution")
 ```
 
+#### Comparison between Member Casual riders depending on ride length
+
 ```{r}
 df %>%
   group_by(member_casual) %>% 
   summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
             max_ride_length = max(ride_length), min_ride_length = min(ride_length))
 ```
+
+#### Fixing the names of days in a week
 
 ```{r}
 df %>% 
@@ -399,6 +446,8 @@ df %>%
   ,avg_ride_length = mean(ride_length),.groups="drop") %>% 
   arrange(member_casual, day_of_week)
 ```
+
+#### Analzying the total rides by members and casual riders in a particular day in a week
 
 ```{r}
 df %>%  
@@ -413,6 +462,8 @@ df %>%
 
 ```
 
+#### Analyzing the average ride time of members casual riders on a particular day of a week
+
 ```{r}
 df %>%  
   group_by(member_casual, day_of_week) %>% 
@@ -422,12 +473,16 @@ df %>%
   labs(title ="Average ride time by Members and Casual riders Vs. Day of the week")
 ```
 
+#### Grouping the rides according to member casual and months of a year
+
 ```{r}
 df %>% 
   group_by(member_casual, month) %>%  
   summarise(number_of_rides = n(), average_ride_length = mean(ride_length), .groups="drop") %>% 
   arrange(member_casual, month)
 ```
+
+#### Analyzing the total rides by members and casual riders in a month
 
 ```{r}
 df %>%  
@@ -441,6 +496,8 @@ df %>%
   scale_y_continuous(labels = function(x) format(x, scientific = FALSE))
 ```
 
+#### Analyzing the ride length by members casual riders in a month
+
 ```{r}
 df %>%  
   group_by(member_casual, month) %>% 
@@ -451,6 +508,8 @@ df %>%
   theme(axis.text.x = element_text(angle = 30))
 ```
 
+#### Analyzing the average distance travelled by member casual rider
+
 ```{r}
 df %>% 
   group_by(member_casual) %>%
@@ -460,12 +519,16 @@ df %>%
   labs(title = "Mean travel distance by Members and Casual riders", x="Member and Casual riders", y="Average distance In Km")
 ```
 
+#### Analysis and visualize the bike demand by hour in a day
+
 ```{r}
 df %>%
     ggplot(aes(hour, fill= member_casual)) +
     labs(x="Hour of the day", title="Cyclistic's Bike demand by hour in a day") +
     geom_bar()
 ```
+
+#### Analysis and visualize the bikes demand by hour in a day of a week
 
 ```{r}
 df %>%
@@ -474,6 +537,8 @@ df %>%
     labs(x="Hour of the day", title="Cyclistic's bike demand per hour by day of the week") +
     facet_wrap(~ day_of_week)
 ```
+
+#### Analyzing the preferred bike by member casual riders
 
 ```{r}
 df %>%
@@ -484,6 +549,8 @@ ggplot(df, aes(x=rideable_type, fill=member_casual)) +
     labs(x="Rideable type", title="Rideable type Vs. total rides by Members and casual riders") +
     geom_bar()
 ```
+
+#### **Analyze and visualize the dataset on coordinate basis**
 
 ```{r}
 coordinates_df <- df %>% 
@@ -498,11 +565,15 @@ casual_riders <- coordinates_df %>% filter(member_casual == "casual")
 member_riders <- coordinates_df %>% filter(member_casual == "member")
 ```
 
+#### Setting up the ggmap for Chicago
+
 ```{r}
 chicago <- c(left = -87.700424, bottom = 41.790769, right = -87.554855, top = 41.990119)
 
 chicago_map <- get_stamenmap(bbox = chicago, zoom = 12, maptype = "terrain")
 ```
+
+#### Visualization on the map
 
 ```{r}
 ggmap(chicago_map,darken = c(0.1, "white")) +
