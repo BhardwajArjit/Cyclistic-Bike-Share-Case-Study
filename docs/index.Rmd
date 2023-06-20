@@ -321,7 +321,7 @@ Now all the required information are in one place and ready for exploration.
 
 -   A summary of analysis.
 
-##### Checking the unique types of ride avaiable
+##### Checking the unique types of ride available
 
 ```{r}
 unique(all_rides$rideable_type)
@@ -371,7 +371,7 @@ dim(df)
 str(df)
 ```
 
-##### Analzying the summary of the dataset
+##### Analyzing the summary of the dataset
 
 ```{r}
 summary(df)
@@ -401,7 +401,7 @@ df <- na.omit(df)
 
 #### Doing descriptive analysis, studying
 
-##### avg_ride_length -\> straigth average(total ride length / total rides)
+##### avg_ride_length -\> straight average(total ride length / total rides)
 
 ##### median_length -\> midpoint number of ride length
 
@@ -428,6 +428,8 @@ ggplot(df, aes(x = member_casual, fill=member_casual)) +
     labs(x="Casuals vs Members", y="Number Of Rides", title= "Casuals vs Members distribution")
 ```
 
+We can see on the Casuals vs Members distribution chart, members possessing \~ 61%, and casual riders have \~ 39% of the dataset. So it is clearly visible that in the whole year 2022 members used ride share 22% more than casual riders.
+
 #### Comparison between Member Casual riders depending on ride length
 
 ```{r}
@@ -436,6 +438,8 @@ df %>%
   summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
             max_ride_length = max(ride_length), min_ride_length = min(ride_length))
 ```
+
+From the above table we can conclude that casual riders took bike for longer rides than members, as the average trip duration / average ride length of member riders is lower than the average trip duration / average ride length of casual riders.
 
 #### Fixing the names of days in a week
 
@@ -508,7 +512,7 @@ df %>%
   theme(axis.text.x = element_text(angle = 30))
 ```
 
-#### Analyzing the average distance travelled by member casual rider
+#### Analyzing the average distance traveled by member casual rider
 
 ```{r}
 df %>% 
@@ -589,3 +593,18 @@ ggmap(chicago_map,darken = c(0.1, "white")) +
     labs(title = "Most used routes by Member riders",x=NULL,y=NULL) +
     theme(legend.position="none")
 ```
+
+### **Share**
+
+This phase will be done by presentation, but here we can use RMarkdown to share our analysis and visualizations.
+
+#### **Key tasks**
+
+-   Determine the best way to share your findings.
+-   Create effective data visualizations.
+-   Present your findings.
+-   Ensure your work is accessible.
+
+#### **Deliverable**
+
+-   Support visualizations and key findings.
