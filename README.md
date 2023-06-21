@@ -15,7 +15,7 @@ This README provides an overview of the Cyclistic Bike Share Company Google Data
 
 ## Dataset Overview
 
-The dataset used in this case study includes historical trip data from Cyclistic. The data spans 12 months, from January 2022 to December 2022, and contains information about bike rides, including trip duration, start and end times, start and end station locations, and user types. The dataset is provided in the form of individual CSV files, one for each month.
+The dataset used in this case study includes historical trip data from Cyclistic. The data spans 12 months, from May 2022 to April 2023, and contains information about bike rides, including trip duration, start and end times, start and end station locations, and user types. The dataset is provided in the form of individual CSV files, one for each month.
 
 ## Objective
 
@@ -44,5 +44,5 @@ The following technologies were used in this case study:
 The case study includes the following files:
 
 1. **README.md**: The file you are currently reading, providing an overview of the case study.
-2. **data**: A directory containing the CSV files for each month of 2022, named as `202201.csv`, `202202.csv`, ..., `202212.csv`.
+2. **data**: A directory containing the CSV files for each month of 2022, named as `202205.csv`, `202206.csv`, ..., `202304.csv`.
 3. **docs**: A folder that contains the RMarkdown used for analysis.RMarkdown.
