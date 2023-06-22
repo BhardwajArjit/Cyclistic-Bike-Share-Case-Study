@@ -45,4 +45,4 @@ The case study includes the following files:
 
 1. **README.md**: The file you are currently reading, providing an overview of the case study.
 2. **data**: A directory containing the CSV files for each month of 2022, named as `202205.csv`, `202206.csv`, ..., `202304.csv`.
-3. **docs**: A folder that contains the RMarkdown used for analysis.RMarkdown.
+3. **docs**: A folder that contains the RMarkdown used for analysis.
