@@ -64,7 +64,7 @@ I will be using Cyclistic's historical trip data to analyse and identify trends.
 #### **Key Tasks**
 
 -   Download data and store it appropriately.
-    -   Data has been downloaded and copies have been stored securely on my computer.
+    -   Data has been downloaded from [divvy-tripdata](https://divvy-tripdata.s3.amazonaws.com/index.html) and copies have been stored securely on my computer.
 -   Identify how it's organised.
     -   All trip data is in comma-delimited (.CSV) format. Column names - "ride_id", "rideable_type", "started_at", "ended_at", "start_station_name", "start_station_id", "end_station_name","end_station_id", "start_lat", "start_lng", "end_lat", "end_lng", "member_casual" (Total 13 columns).
 -   Sort and filter the data.
