@@ -770,3 +770,10 @@ Act phase will be done by the Cyclistic's executive team, Director of Marketing 
     -   Coupons and discounts could be handed out along with the annual subscription / weekend-only membership for the usage of electric bikes targeting casual riders. Also increasing the number of electric bike while reducing classic bikes if electric bike costs more for the pass, this can be beneficial for the company. (As electric bike are already in trend and usage is good as per member and ride type data.
 
     -   Create marketing campaigns which can be sent via email, or advertisement in the docking stations explaining why annual member is beneficial. Campaigns should be placed at the peak months of the year.
+-   **Additional Recommendations**:
+    -   Raise awareness of the ease of use, affordability, accessibility and green options.
+    -   Focus on dense and walk able areas, partnering with school and companies.
+
+#### **Conclusion**
+
+Thank you for your time and interest to review my capstone project! This project helped me to walk through the data analysis process from start to finish using real-world data and business questions. To learn from the others code too, I have referred the analysis done by Elaine Sanchez Wilber and Sayantan Bagchi. I'm truly excited and look forward to growing in the field of data analysis.
