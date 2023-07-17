@@ -47,10 +47,9 @@ The following technologies were used in this case study:
 The case study includes the following files:
 
 1. **README.md**: The file you are currently reading, providing an overview of the case study.
-2. **Data**: TA directory containing the CSV files for each month of 2022, named as `202205.csv`, `202206.csv`, ..., `202304.csv`.
-3. **docs**: A folder that contains the RMarkdown used for analysis.
-4. **index.Rmd**: RMarkdown file containing the R code and analysis for the case study.
-5. **index.html**: The HTML report generated from the RMarkdown file, summarizing the analysis findings and recommendations.
+2. **docs**: A folder that contains the RMarkdown used for analysis.
+3. **index.Rmd**: RMarkdown file containing the R code and analysis for the case study.
+4. **index.html**: The HTML report generated from the RMarkdown file, summarizing the analysis findings and recommendations.
 
 
 ## Usage
