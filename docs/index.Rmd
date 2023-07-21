@@ -1,5 +1,5 @@
 ---
-title: "Cyclistic Bike Share Case Study Analysis"
+title: "Cyclistic Bike Share Case Study"
 author: "Arjit Bhardwaj"
 date: "2023-06-10"
 output: html_document
@@ -77,7 +77,7 @@ I will be using Cyclistic's historical trip data to analyse and identify trends.
 -   A description of all data sources used.
     -   Main source data provided by Cyclistic Company.
 
-##### importing the packages to be used
+##### **Importing the packages to be used**
 
 ```{r}
 library(readr)
@@ -88,7 +88,7 @@ library(ggplot2)
 library(ggmap)
 ```
 
-##### import data in R Studio
+##### **Import data in R Studio**
 
 ```{r}
 df1 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202205-divvy-tripdata.csv')
@@ -105,7 +105,7 @@ df11 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202303-divvy-tr
 df12 <- read.csv('/home/arjit/Projects/Case Study Cyclistic/Data/202304-divvy-tripdata.csv')
 ```
 
-##### checking the consistency of data
+##### **Checking the consistency of data**
 
 ```{r}
 colnames(df1)
@@ -122,7 +122,7 @@ colnames(df11)
 colnames(df12)
 ```
 
-##### checking the structure of data
+##### **Checking the structure of data**
 
 ```{r}
 str(df1)
@@ -139,13 +139,13 @@ str(df11)
 str(df12)
 ```
 
-##### merging 12 datasets into 1 dataset
+##### **Merging 12 datasets into 1 dataset**
 
 ```{r}
 all_rides <- rbind(df1, df2, df3, df4, df5, df6, df7, df8, df9, df10, df11, df12)
 ```
 
-##### creating a file of the merged dataset
+##### **Creating a file of the merged dataset**
 
 ```{r}
 write_csv(all_rides, '/home/arjit/Projects/Case Study Cyclistic/Data/all_rides.csv')
@@ -166,13 +166,13 @@ Cleaning and processing data for analysis
 
 -   Documentation of any cleaning or manipulating the data
 
-##### Analyzing the the structure of attributes
+##### **Analyzing the the structure of attributes**
 
 ```{r}
 sapply(all_rides, class)
 ```
 
-##### Number of columns, rows and total NA values
+##### **Number of columns, rows and total NA values**
 
 ```{r}
 ncol(all_rides)
@@ -181,33 +181,33 @@ nrow(all_rides)
 sum(is.na(all_rides))
 ```
 
-##### Removing all the empty cells
+##### **Removing all the empty cells**
 
 ```{r}
 all_rides <- janitor::remove_empty(all_rides, which=c("cols"))
 all_rides <- janitor::remove_empty(all_rides, which=c("rows"))
 ```
 
-##### Removing all the NA values
+##### **Removing all the NA values**
 
 ```{r}
 all_rides <- na.omit(all_rides)
 sum(is.na(all_rides))
 ```
 
-##### Checking the number of rows left after removing NA
+##### **Checking the number of rows left after removing NA**
 
 ```{r}
 nrow(all_rides)
 ```
 
-##### Checking the dimension of the dataset
+##### **Checking the dimension of the dataset**
 
 ```{r}
 dim(all_rides)
 ```
 
-##### Calculating the ride time
+##### **Calculating the ride time**
 
 ```{r}
 all_rides$minutes <- difftime(all_rides$ended_at, all_rides$started_at, units = c("min"))
@@ -215,13 +215,13 @@ all_rides$minutes <- as.numeric(as.character(all_rides$minutes))
 all_rides$minutes <- round(all_rides$minutes, 1)
 ```
 
-##### Checking the datatype of "minutes" column
+##### **Checking the datatype of "minutes" column**
 
 ```{r}
 is.numeric(all_rides$minutes)
 ```
 
-##### Adding date, month, day, year, day of week, hour columns
+##### **Adding date, month, day, year, day of week, hour columns**
 
 ```{r}
 all_rides$date <- as.Date(all_rides$started_at)
@@ -232,13 +232,13 @@ all_rides$day_of_week <- format(as.Date(all_rides$date), "%A")
 all_rides$hour <- hour(all_rides$started_at)
 ```
 
-##### Checking the modified dataset
+##### **Checking the modified dataset**
 
 ```{r}
 head(all_rides)
 ```
 
-##### Adding the season column
+##### **Adding the season column**
 
 ```{r}
 all_rides <- all_rides %>% mutate(season = case_when(month == "01" ~ "Winter",
@@ -255,7 +255,7 @@ all_rides <- all_rides %>% mutate(season = case_when(month == "01" ~ "Winter",
                                                      month == "12" ~ "Winter"))
 ```
 
-##### Mapping the time column to phases of a day
+##### **Mapping the time column to phases of a day**
 
 ```{r}
 all_rides <- all_rides %>% mutate(time_of_day = case_when(hour == "0" ~ "Night",
@@ -284,7 +284,7 @@ all_rides <- all_rides %>% mutate(time_of_day = case_when(hour == "0" ~ "Night",
                                                           hour == "23" ~ "Evening"))
 ```
 
-##### Mapping the months to their names
+##### **Mapping the months to their names**
 
 ```{r}
 all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January", 
@@ -301,7 +301,7 @@ all_rides <- all_rides %>% mutate(month = case_when(month == "01" ~ "January",
                                                     month == "12" ~ "December"))
 ```
 
-##### Verifying the results
+##### **Verifying the results**
 
 ```{r}
 tail(all_rides)
@@ -322,25 +322,25 @@ Now all the required information are in one place and ready for exploration.
 
 -   A summary of analysis.
 
-##### Checking the unique types of ride available
+##### **Checking the unique types of ride available**
 
 ```{r}
 unique(all_rides$rideable_type)
 ```
 
-##### Checking the unique values in member_casual
+##### **Checking the unique values in member_casual**
 
 ```{r}
 unique(all_rides$member_casual)
 ```
 
-##### Verifying if there are any NA in dataset
+##### **Verifying if there are any NA in dataset**
 
 ```{r}
 sum(is.na(all_rides))
 ```
 
-##### Checking if there are any duplicates
+##### **Checking if there are any duplicates**
 
 ```{r}
 #distinct(all_rides)
@@ -366,19 +366,19 @@ head(df)
 dim(df)
 ```
 
-##### Checking the structure of dataset
+##### **Checking the structure of dataset**
 
 ```{r}
 str(df)
 ```
 
-##### Analyzing the summary of the dataset
+##### **Analyzing the summary of the dataset**
 
 ```{r}
 summary(df)
 ```
 
-##### Calculating the ride length in kilometers
+##### **Calculating the ride length in kilometers**
 
 ```{r}
 df$ride_length <- distGeo(matrix(c(df$start_lng, df$start_lat), ncol = 2), matrix(c(df$end_lng, df$end_lat), ncol = 2))
@@ -386,13 +386,13 @@ df$ride_length <- distGeo(matrix(c(df$start_lng, df$start_lat), ncol = 2), matri
 df$ride_length <- df$ride_length/1000
 ```
 
-##### Removing the rows with ride length as negative or zero
+##### **Removing the rows with ride length as negative or zero**
 
 ```{r}
 df <- df[!(df$ride_length <= 0),]
 ```
 
-##### Removing the NA in the dataset
+##### **Removing the NA in the dataset**
 
 ```{r}
 sum(is.na(df))
@@ -400,15 +400,15 @@ sum(is.na(df))
 df <- na.omit(df)
 ```
 
-#### Doing descriptive analysis, studying
+#### **Doing descriptive analysis, studying:**
 
-##### avg_ride_length -\> straight average(total ride length / total rides)
+* avg_ride_length -\> straight average(total ride length / total rides)
 
-##### median_length -\> midpoint number of ride length
+* median_length -\> midpoint number of ride length
 
-##### max_ride_length -\> longest ride
+* max_ride_length -\> longest ride
 
-##### min_ride_length -\> shortest ride
+* min_ride_length -\> shortest ride
 
 ```{r}
 df %>% summarise(avg_ride_length = mean(ride_length), median_length = median(ride_length), 
@@ -431,7 +431,7 @@ ggplot(df, aes(x = member_casual, fill=member_casual)) +
 
 We can see on the Casuals vs Members distribution chart, members possessing \~ 61%, and casual riders have \~ 39% of the dataset. So it is clearly visible that in the whole year 2022 members used ride share 22% more than casual riders.
 
-#### Comparison between Member Casual riders depending on ride length
+#### **Comparison between Member Casual riders depending on ride length**
 
 ```{r}
 df %>%
@@ -442,7 +442,7 @@ df %>%
 
 From the above table we can conclude that casual riders took bike for longer rides than members, as the average trip duration / average ride length of member riders is lower than the average trip duration / average ride length of casual riders.
 
-#### Fixing the names of days in a week
+#### **Fixing the names of days in a week**
 
 ```{r}
 df$day_of_week <- ordered(df$day_of_week, 
@@ -454,7 +454,7 @@ df %>%
   arrange(member_casual, day_of_week)
 ```
 
-#### Analyzing the total rides by members and casual riders in a particular day in a week
+#### **Analyzing the total rides by members and casual riders in a particular day in a week**
 
 ```{r}
 df %>%  
@@ -471,7 +471,7 @@ df %>%
 
 From the above graph, we can conclude that members took consistent rides throughout the week with least on Sunday. For the casual riders, the most rides were taken on weekends.
 
-#### Analyzing the average ride time of members casual riders on a particular day of a week
+#### **Analyzing the average ride time of members casual riders on a particular day of a week**
 
 ```{r}
 df %>%  
@@ -484,7 +484,7 @@ df %>%
 
 The average ride length for members are comparatively less than that of casual riders. Also it can be seen that weekend average ride length is much higher for casual riders along with total rides. So both of this facts can be correlated for casual riders. For members average ride length is about the same throughout the week
 
-#### Grouping the rides according to member casual and months of a year
+#### **Grouping the rides according to member casual and months of a year**
 
 ```{r}
 df %>% 
@@ -493,7 +493,7 @@ df %>%
   arrange(member_casual, month)
 ```
 
-#### Analyzing the total rides by members and casual riders in a month
+#### **Analyzing the total rides by members and casual riders in a month**
 
 ```{r}
 df$month <- ordered(df$month, 
@@ -511,7 +511,7 @@ df %>%
 
 The months June, July, August and September are the most busy time of the year among both members and casual riders. It is possible due to winter there is a significant drop in total rides in the months of November, December, January and February for both type of customers. But we can see that member's total rides are higher than casual riders throughout the year except from June, July and August.
 
-#### Analyzing the ride length by members casual riders in a month
+#### **Analyzing the ride length by members casual riders in a month**
 
 ```{r}
 df %>%  
@@ -525,7 +525,7 @@ df %>%
 
 Average ride length of members is about the same throughout the year. While casual riders average ride length is greater than the members throughout the year.
 
-#### Analyzing the average distance traveled by member casual rider
+#### **Analyzing the average distance traveled by member casual rider**
 
 ```{r}
 df %>% 
@@ -538,7 +538,7 @@ df %>%
 
 From the above chart we can see that both riders travel about the same average distance. This similarity could be possible due to that member take (same ride time) rides throughout the week, but casual riders took rides mostly in weekends with higher ride time.
 
-#### Analysis and visualize the bike demand by hour in a day
+#### **Analysis and visualize the bike demand by hour in a day**
 
 ```{r}
 df %>%
@@ -549,7 +549,7 @@ df %>%
 
 From the above chart we can see more members between 7am and 11am and more casual riders between 3pm and 12am. Also there is bigger volume rise in the afternoon for both type of riders. This information needs to be checked on day basis.
 
-#### Analysis and visualize the bikes demand by hour in a day of a week
+#### **Analysis and visualize the bikes demand by hour in a day of a week**
 
 ```{r}
 df %>%
@@ -561,7 +561,7 @@ df %>%
 
 There is a lot of difference between the weekdays and weekends. There is a big increase of volume in the weekdays between 7am to 10am and another volume increase from 5pm to 7pm. We can hypothesize that members use the bikes as daily routine like going to work (same behavior throughout the weekdays) and go back from work (5pm - 7pm). Weekends are completely different for members and casual riders, Friday, Saturday and Sunday there is huge peak in volume for casual riders, from this we can hypothesize that casual riders mostly use bike share for leisure activity in the weekends.
 
-#### Analyzing the preferred bike by member casual riders
+#### **Analyzing the preferred bike by member casual riders**
 
 ```{r}
 df %>%
@@ -575,7 +575,7 @@ ggplot(df, aes(x=rideable_type, fill=member_casual)) +
 
 From the above viz we can see that members mostly use classic bikes, followed by electric bikes. Docked bikes mostly used by casual riders. Electric bikes are more favored by members.
 
-#### Analyzing and visualizing the top 5 starting stations for casual riders
+#### **Analyzing and visualizing the top 5 starting stations for casual riders**
 
 ```{r}
 df %>% 
@@ -602,7 +602,7 @@ df %>%
   labs(x="Number of Rides", y="Start Station Name", title="Top 5 starting stations for casual riders")
 ```
 
-#### Analyzing and visualizing the top 5 ending stations for casual riders
+#### **Analyzing and visualizing the top 5 ending stations for casual riders**
 
 ```{r}
 df %>% 
@@ -629,7 +629,7 @@ df %>%
   labs(x="Number of Rides", y="End Station Name", title="Top 5 ending stations for casual riders")
 ```
 
-#### Analyzing and visualizing the top 5 starting stations for member riders
+#### **Analyzing and visualizing the top 5 starting stations for member riders**
 
 ```{r}
 df %>% 
@@ -656,7 +656,7 @@ df %>%
   labs(x="Number of Rides", y="Start Station Name", title="Top 5 starting stations for member riders")
 ```
 
-#### Analyzing and visualizing the top 5 ending stations for casual riders
+#### **Analyzing and visualizing the top 5 ending stations for casual riders**
 
 ```{r}
 df %>% 
@@ -698,7 +698,7 @@ casual_riders <- coordinates_df %>% filter(member_casual == "casual")
 member_riders <- coordinates_df %>% filter(member_casual == "member")
 ```
 
-#### Setting up the ggmap for Chicago
+#### **Setting up the ggmap for Chicago**
 
 ```{r}
 chicago <- c(left = -87.700424, bottom = 41.790769, right = -87.554855, top = 41.990119)
@@ -706,7 +706,7 @@ chicago <- c(left = -87.700424, bottom = 41.790769, right = -87.554855, top = 41
 chicago_map <- get_stamenmap(bbox = chicago, zoom = 12, maptype = "terrain")
 ```
 
-#### Visualization on the map
+#### **Visualization on the map**
 
 ```{r}
 ggmap(chicago_map,darken = c(0.1, "white")) +
