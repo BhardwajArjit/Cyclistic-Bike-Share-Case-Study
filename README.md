@@ -8,6 +8,8 @@
 - [Data Analysis Process](#data-analysis-process)
 - [Technologies Used](#technologies-used)
 - [Files](#files)
+- [Usage](#usage)
+- [Author](#author)
 
 ## Introduction
 
@@ -36,13 +38,31 @@ The data analysis process for this case study involves the following steps:
 
 The following technologies were used in this case study:
 
-- R: The data analysis and cleaning tasks were performed using R programming language.
-- RMarkdown: RMarkdown was used as the development environment for running R code and creating the analysis report.
+- R: R programming language was used for data analysis, cleaning, and visualization.
+- RMarkdown: RMarkdown was used as the tool to create dynamic and reproducible reports.
+- tidyverse: The tidyverse package, including dplyr and ggplot2, was used for data manipulation and visualization.
 
 ## Files
 
 The case study includes the following files:
 
 1. **README.md**: The file you are currently reading, providing an overview of the case study.
-2. **data**: A directory containing the CSV files for each month of 2022, named as `202205.csv`, `202206.csv`, ..., `202304.csv`.
-3. **docs**: A folder that contains the RMarkdown used for analysis.
+2. **docs**: A folder that contains the RMarkdown used for analysis.
+3. **index.Rmd**: RMarkdown file containing the R code and analysis for the case study.
+4. **index.html**: The HTML report generated from the RMarkdown file, summarizing the analysis findings and recommendations.
+
+
+## Usage
+
+To run the analysis and explore the case study, follow these steps:
+
+1. Ensure R and RStudio are installed on your system.
+2. Clone the repository or download the files to your local machine.
+3. Open RStudio and set the working directory to the location of the case study files.
+4. Open the `index.Rmd` file in RStudio to view and run the analysis code.
+5. Knit the RMarkdown file to generate the HTML report (`index.html`) summarizing the analysis findings and recommendations.
+
+
+## Author
+
+This case study was conducted and documented by Arjit Bhardwaj.
