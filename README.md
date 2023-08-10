@@ -65,7 +65,7 @@ To run the analysis and explore the case study, follow these steps:
 
 ## Conclusion
 
-Through this case study, we aim to provide valuable insights and recommendations to Bellabeat based on the analysis of user data. By leveraging data-driven strategies, Cyclistic Bike Share Company can enhance their product offerings and marketing efforts to better cater to their target audience, ultimately leading to improved customer satisfaction and business growth.
+Through this case study, we aim to provide valuable insights and recommendations to Cyclistic Bike Share Company based on the analysis of user data. By leveraging data-driven strategies, Cyclistic Bike Share Company can enhance their product offerings and marketing efforts to better cater to their target audience, ultimately leading to improved customer satisfaction and business growth.
 
 ## Author
 
