@@ -11,6 +11,7 @@
 - [Usage](#usage)
 - [Conclusion](#conclusion)
 - [Author](#author)
+- [License](#license)
 
 ## Introduction
 
@@ -52,7 +53,6 @@ The case study includes the following files:
 3. **index.Rmd**: RMarkdown file containing the R code and analysis for the case study.
 4. **index.html**: The HTML report generated from the RMarkdown file, summarizing the analysis findings and recommendations.
 
-
 ## Usage
 
 To run the analysis and explore the case study, follow these steps:
@@ -70,3 +70,9 @@ Through this case study, we aim to provide valuable insights and recommendations
 ## Author
 
 This case study was conducted and documented by Arjit Bhardwaj.
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+Visit the [Cyclistic Bike Share Case Study](https://bhardwajarjit.github.io/Cyclistic-Bike-Share-Case-Study/) for detailed analysis and insights.
